@@ -243,6 +243,8 @@ Oskari.clazz.define(
                     }
                 },
                 success: function (resp) {
+                    
+                    dialog.show(me._getLocalization('basket-thank-you'), me._getLocalization('basket-email-will-be'), [btn]);
                     if (resp.success) {
                         var dialog = Oskari.clazz.create('Oskari.userinterface.component.Popup');
                         var btn = dialog.createCloseButton('OK');
@@ -268,8 +270,8 @@ Oskari.clazz.define(
                             me.sendBtn.setEnabled(true);
                         });
                         btn.addClass('primary');
-                        dialog.show(me._getLocalization('basket-thank-you'), me._getLocalization('basket-email-will-be'), [btn]);
-                    } else {
+                    } 
+                    else {
                         me._openPopup(
                             me._getLocalization('title'),
                             me._getLocalization('error-in-downloading')
