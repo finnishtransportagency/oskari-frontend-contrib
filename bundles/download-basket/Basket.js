@@ -235,6 +235,34 @@ Oskari.clazz.define(
             };
             var strUserDetails = JSON.stringify(userDetails);
             me.sendBtn.setEnabled(false);
+            
+            //Show pop-up immediately so there is no timeout and it won't jam with bigger downloads, lakapa specific 
+            var dialog = Oskari.clazz.create('Oskari.userinterface.component.Popup');
+            var btn = dialog.createCloseButton('OK');
+            var container = me.getContainer();
+            btn.setHandler(function () {
+                container.find('.oskari__download-basket-wrapper').show();
+                container.find('.oskari__download-basket-user-info').hide();
+
+                container.find('.download-basket__component').remove();
+                container.find('.empty-basket').show();
+                me._selected = [];
+                me.instance.addBasketNotify();
+
+                me._buttonsVisible({
+                    empty: false,
+                    next: false,
+                    prev: false,
+                    send: false
+                });
+                container.find('.oskari__download-basket').parents('.oskari-flyoutcontentcontainer').find('.tabsItem>li>a').eq(0).trigger('click');
+                container.find('.cropping-btn.selected').trigger('click');
+                dialog.close();
+                me.sendBtn.setEnabled(true);
+            });
+            btn.addClass('primary');
+            dialog.show(me._getLocalization('basket-thank-you'), me._getLocalization('basket-email-will-be'), [btn]);
+            
 
             jQuery.ajax({
                 beforeSend: function (x) {
@@ -243,33 +271,6 @@ Oskari.clazz.define(
                     }
                 },
                 success: function (resp) {
-                    
-                    var dialog = Oskari.clazz.create('Oskari.userinterface.component.Popup');
-                    var btn = dialog.createCloseButton('OK');
-                    var container = me.getContainer();
-                    btn.setHandler(function () {
-                        container.find('.oskari__download-basket-wrapper').show();
-                        container.find('.oskari__download-basket-user-info').hide();
-
-                        container.find('.download-basket__component').remove();
-                        container.find('.empty-basket').show();
-                        me._selected = [];
-                        me.instance.addBasketNotify();
-
-                        me._buttonsVisible({
-                            empty: false,
-                            next: false,
-                            prev: false,
-                            send: false
-                        });
-                        container.find('.oskari__download-basket').parents('.oskari-flyoutcontentcontainer').find('.tabsItem>li>a').eq(0).trigger('click');
-                        container.find('.cropping-btn.selected').trigger('click');
-                        dialog.close();
-                        me.sendBtn.setEnabled(true);
-                    });
-                    btn.addClass('primary');
-                    dialog.show(me._getLocalization('basket-thank-you'), me._getLocalization('basket-email-will-be'), [btn]);
-                    
                     if (!resp.success) {
                         me._openPopup(
                             me._getLocalization('title'),
