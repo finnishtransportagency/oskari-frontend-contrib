@@ -5,6 +5,7 @@ import olFormatGeoJSON from 'ol/format/GeoJSON';
  * Analyses data  and save results
  *
  */
+
 Oskari.clazz.define('Oskari.analysis.bundle.analyse.view.StartAnalyse',
 
     /**
@@ -102,6 +103,7 @@ Oskari.clazz.define('Oskari.analysis.bundle.analyse.view.StartAnalyse',
         me._param_footer.append(this.loc.aggregate.footer);
         me._showFeatureDataAfterAnalysis = null;
         me._showFeatureDataWithoutSaving = null;
+        me._unsupportedWfsLayerVersion = '3.0.0';
     }, {
         __templates: {
             content: '<div class="layer_data"></div>',
@@ -892,38 +894,10 @@ Oskari.clazz.define('Oskari.analysis.bundle.analyse.view.StartAnalyse',
          * @return {Object}
          */
         getStyleValues: function () {
-            var me = this,
-                values = {};
-
             // Sets random color values for visualization form
             // if the checkbox is checked.
-            me.randomizeColors();
-
-            var formValues = me.visualizationForm.getValues();
-            if (formValues) {
-                values.dot = {
-                    size: formValues.dot.size,
-                    color: formValues.dot.color,
-                    shape: formValues.dot.shape
-                };
-                values.line = {
-                    size: formValues.line.width,
-                    color: formValues.line.color,
-                    cap: formValues.line.cap,
-                    corner: formValues.line.corner,
-                    style: formValues.line.style
-                };
-                values.area = {
-                    size: formValues.area.lineWidth,
-                    lineColor: formValues.area.lineColor === null ? null : formValues.area.lineColor,
-                    fillColor: formValues.area.fillColor === null ? null : formValues.area.fillColor,
-                    lineStyle: formValues.area.lineStyle,
-                    fillStyle: formValues.area.fillStyle,
-                    lineCorner: formValues.area.lineCorner
-                };
-            }
-
-            return values;
+            this.randomizeColors();
+            return this.visualizationForm.getOskariStyle();
         },
 
         /**
@@ -1228,8 +1202,17 @@ Oskari.clazz.define('Oskari.analysis.bundle.analyse.view.StartAnalyse',
         },
 
         _eligibleForAnalyse: function (layer) {
-            return ((layer.hasFeatureData && layer.hasFeatureData()) ||
-                layer.isLayerOfType(this.contentPanel.getLayerType()));
+            return (((layer.hasFeatureData && layer.hasFeatureData()) ||
+                layer.isLayerOfType(this.contentPanel.getLayerType())) && 
+                    this._layerHasSupportedVersion(layer.getLayerType(),layer.getVersion()));
+        },
+
+        _layerHasSupportedVersion(layerType,layerVersion){
+            if((layerType === 'wfs' || layerType === 'analysislayer') &&
+                layerVersion === this._unsupportedWfsLayerVersion){
+                    return false;
+            }
+            return true;
         },
 
         /**
@@ -2842,7 +2825,7 @@ Oskari.clazz.define('Oskari.analysis.bundle.analyse.view.StartAnalyse',
                 me.instance.sandbox.postRequestByName(rq);
                 // Store temp geometry layer
                 var title = me.mainPanel.find('.settings_name_field').val() ? me.mainPanel.find('.settings_name_field').val() : '_';
-                contentPanel.addGeometry(me._getOLGeometry(geojson), title);
+                contentPanel.addFeature(me._getOLGeometry(geojson), title);
                 me._showFeatureDataWithoutSaving = false;
                 popup.close(true);
             });
