@@ -187,48 +187,6 @@
       "instanceProps":{
 
       },
-      "title":"Karttatasot",
-      "bundleinstancename":"lakapa-layerselector2",
-      "fi":"Karttatasot",
-      "sv":"Kartlager",
-      "en":"Map layers",
-      "bundlename":"lakapa-layerselector2",
-      "metadata":{
-         "Import-Bundle":{
-            "lakapa-layerselector2":{
-               "bundlePath":"../../../packages/liikennevirasto/bundle/"
-            }
-         },
-         "Require-Bundle-Instance":[
-
-         ]
-      }
-   },
-   {
-      "instanceProps":{
-
-      },
-      "title":"Valitut karttatasot",
-      "bundleinstancename":"layerselection2",
-      "fi":"Valitut karttatasot",
-      "sv":"Valda kartlager",
-      "en":"Selected layers",
-      "bundlename":"layerselection2",
-      "metadata":{
-         "Import-Bundle":{
-            "layerselection2":{
-               "bundlePath":"oskari-frontend/packages/framework/bundle/"
-            }
-         },
-         "Require-Bundle-Instance":[
-
-         ]
-      }
-   },
-   {
-      "instanceProps":{
-
-      },
       "title":"Koordinaattinäyttö",
       "bundleinstancename":"coordinatedisplay",
       "fi":"Koordinaattinäyttö",
@@ -397,6 +355,28 @@
             "Import-Bundle": {
                 "lakapa-startup-info": {
                     "bundlePath": "../../../packages/liikennevirasto/bundle/"
+                }
+            },
+            "Require-Bundle-Instance": []
+        }
+    },
+    {
+        "bundlename": "hierarchical-layerlist",
+        "metadata": {
+            "Import-Bundle": {
+                "hierarchical-layerlist": {
+                    "bundlePath": "oskari-frontend/packages/framework/bundle/"
+                }
+            },
+            "Require-Bundle-Instance": []
+        }
+    },
+    {
+        "bundlename": "admin-hierarchical-layerlist",
+        "metadata": {
+            "Import-Bundle": {
+                "admin-hierarchical-layerlist": {
+                    "bundlePath": "oskari-frontend/packages/admin/bundle/"
                 }
             },
             "Require-Bundle-Instance": []
