@@ -294,7 +294,7 @@ Oskari.clazz.define('Oskari.analysis.bundle.analyse.view.StartAnalyse',
             container.find('div.header div.icon-close').on(
                 'click',
                 function () {
-                    me.instance.setAnalyseMode(false);
+                    me.instance.disableAnalyseMode();
                 }
             );
             contentDiv.append(me.template.analysisAdditionalInfo.clone());
@@ -918,7 +918,7 @@ Oskari.clazz.define('Oskari.analysis.bundle.analyse.view.StartAnalyse',
                 );
 
             closeBtn.setHandler(function () {
-                me.instance.setAnalyseMode(false);
+                me.instance.disableAnalyseMode();
             });
             closeBtn.setId(
                 'oskari_analysis_analyse_view_start_analyse_buttons_cancel'
@@ -2289,7 +2289,6 @@ Oskari.clazz.define('Oskari.analysis.bundle.analyse.view.StartAnalyse',
         refreshAnalyseData: function (layer_id) {
             // Remove old
             this.contentPanel.emptyLayers();
-            this.contentPanel._activateSelectControls();
             this._addAnalyseData(this.contentPanel, layer_id);
         },
 
