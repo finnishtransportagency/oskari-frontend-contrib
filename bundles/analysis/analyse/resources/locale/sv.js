@@ -373,12 +373,13 @@ Oskari.registerLocalization(
                 "timeout": "Analys misslyckades beroende på tidsutlösning.",
                 "error": "Analys misslyckades.",
                 "parsererror": "Det finns fel i resultaten.",
-                "not_supported_WFS_3_0_maplayer": "Tyvärr stöder analysen inte detta kartlager (WFS 3.0)."
+                "not_supported_wfs_maplayer": "Analysen är för tillfället endast tillgänglig med WFS-versioner 1.0.0 och 1.1.0. Tyvärr är gränssnittstypen du använder inte ännu stödd i tjänsten."
             },
             "infos": {
-                "title": "För många attributer",
+                "title": "Attributer",
                 "layer": "Analyslager",
-                "over10": "har över 10 attribut. Välj högst 10 attribut för analys. Du hittar en lista av attribut i meny \"Parameter\" när du har valt en analysmetod."
+                "over10": "har över 10 attribut. Välj högst 10 attribut för analys. Du hittar en lista av attribut i meny \"Parameter\" när du har valt en analysmetod.",
+                "userlayer": "De egna datamängdernas attributer kan inte användas i analysfunktionen. Objekternas geometrier (zon, union, snitt) kan dock användas."
             },
             "aggregatePopup": {
                 "title": "Analys resultat",
